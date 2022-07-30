@@ -17,6 +17,7 @@ public class SlideMapping : IEntityTypeConfiguration<Slide>
         builder.Property(x => x.Heading).HasMaxLength(255).IsRequired();
         builder.Property(x => x.Title).HasMaxLength(255);
         builder.Property(x => x.Text).HasMaxLength(255);
+        builder.Property(x => x.Link).HasMaxLength(500).IsRequired();
         builder.Property(x => x.BtnText).HasMaxLength(50).IsRequired();
 
     }

@@ -17,7 +17,7 @@ public class SlideApplication : ISlideApplication
     {
         var operation = new OperationResult();
         var slide = new Slide(command.Picture, command.PictureAlt, command.PictureTitle, command.Heading,
-            command.Title, command.Text, command.BtnText);
+            command.Title, command.Text, command.Link, command.BtnText);
 
         _slideRepository.Create(slide);
         _slideRepository.SaveChanges();
@@ -35,7 +35,7 @@ public class SlideApplication : ISlideApplication
         }
 
         slide.Edit(command.Picture, command.PictureAlt, command.PictureTitle, command.Heading,
-            command.Title, command.Text, command.BtnText);
+            command.Title, command.Text, command.Link, command.BtnText);
         _slideRepository.SaveChanges();
         return operation.Succeeded();
     }
