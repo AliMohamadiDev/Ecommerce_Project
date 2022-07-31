@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Linq.Expressions;
+using _0_Framework.Application;
 using _0_Framework.Infrastructure;
 using ShopManagement.Application.Contracts.ProductCategory;
 using ShopManagement.Domain.ProductCategoryAgg;
@@ -52,7 +53,7 @@ public class ProductCategoryRepository : RepositoryBase<long, ProductCategory>, 
             Id = x.Id,
             Picture = x.Picture,
             Name = x.Name,
-            CreationDate = x.CreationDate.ToString(CultureInfo.InvariantCulture)
+            CreationDate = x.CreationDate.ToFarsi()
         }).ToList();
 
         if (!string.IsNullOrWhiteSpace(searchModel.Name))

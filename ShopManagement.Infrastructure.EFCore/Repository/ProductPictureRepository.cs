@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using _0_Framework.Application;
 using _0_Framework.Domain;
 using _0_Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,7 @@ public class ProductPictureRepository : RepositoryBase<long, ProductPicture>, IP
             {
                 Id = x.Id,
                 Product = x.Product.Name,
-                CreationDate = x.CreationDate.ToString(CultureInfo.InvariantCulture),
+                CreationDate = x.CreationDate.ToFarsi(),
                 Picture = x.Picture,
                 ProductId = x.ProductId,
                 IsRemoved = x.IsRemoved

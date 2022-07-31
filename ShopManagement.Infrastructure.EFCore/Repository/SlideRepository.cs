@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using _0_Framework.Application;
 using _0_Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using ShopManagement.Application.Contracts.Slide;
@@ -41,7 +42,7 @@ public class SlideRepository : RepositoryBase<long, Slide>, ISlideRepository
             Picture = x.Picture,
             Title = x.Title,
             IsRemoved = x.IsRemoved,
-            CreationDate = x.CreationDate.ToString(CultureInfo.InvariantCulture)
+            CreationDate = x.CreationDate.ToFarsi()
         }).OrderByDescending(x => x.Id).ToList();
     }
 }
