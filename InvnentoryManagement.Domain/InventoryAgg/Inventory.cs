@@ -15,6 +15,12 @@ public class Inventory : EntityBase
         UnitPrice = unitPrice;
         InStock = false;
     }
+    
+    public void Edit(long productId, double unitPrice)
+    {
+        ProductId = productId;
+        UnitPrice = unitPrice;
+    }
 
     public long CalculateCurrentCount()
     {
