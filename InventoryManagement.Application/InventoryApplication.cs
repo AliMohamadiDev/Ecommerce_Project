@@ -36,7 +36,7 @@ namespace InventoryManagement.Application
                 return operation.Failed(ApplicationMessages.RecordNotFound);
             }
 
-            if (_inventoryRepository.Exists(x => x.ProductId == x.ProductId && x.Id == command.Id))
+            if (_inventoryRepository.Exists(x => x.ProductId == command.ProductId && x.Id != command.Id))
             {
                 return operation.Failed(ApplicationMessages.DuplicatedRecord);
             }
