@@ -6,7 +6,7 @@ public class InventoryOperation
     public bool Operation { get; private set; }
     public long Count { get; private set; }
     public long OperatorId { get; private set; }
-    public DateTime CreationDate { get; private set; }
+    public DateTime OperationDate { get; private set; }
     public long CurrentCount { get; private set; }
     public string Description { get; private set; }
     public long OrderId { get; private set; }
@@ -24,5 +24,6 @@ public class InventoryOperation
         Description = description;
         OrderId = orderId;
         InventoryId = inventoryId;
+        OperationDate = DateTime.Now;
     }
 }
