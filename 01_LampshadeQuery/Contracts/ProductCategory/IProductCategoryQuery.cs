@@ -3,4 +3,5 @@
 public interface IProductCategoryQuery
 {
     List<ProductCategoryQueryModel> GetProductCategories();
+    List<ProductCategoryQueryModel> GetProductCategoriesWithProducts();
 }
