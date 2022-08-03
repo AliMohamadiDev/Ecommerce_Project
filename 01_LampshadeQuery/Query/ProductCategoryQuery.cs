@@ -1,6 +1,7 @@
 ﻿using _0_Framework.Application;
 using _01_LampshadeQuery.Contracts.Product;
 using _01_LampshadeQuery.Contracts.ProductCategory;
+using DiscountManagement.Infrastructure.EFCore;
 using InventoryManagement.Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
 using ShopManagement.Domain.ProductAgg;
@@ -12,11 +13,14 @@ public class ProductCategoryQuery : IProductCategoryQuery
 {
     private readonly ShopContext _shopContext;
     private readonly InventoryContext _inventoryContext;
+    private readonly DiscountContext _discountContext;
 
-    public ProductCategoryQuery(ShopContext shopContext, InventoryContext inventoryContext)
+    public ProductCategoryQuery(ShopContext shopContext, InventoryContext inventoryContext,
+        DiscountContext discountContext)
     {
         _shopContext = shopContext;
         _inventoryContext = inventoryContext;
+        _discountContext = discountContext;
     }
 
     public List<ProductCategoryQueryModel> GetProductCategories()
@@ -37,6 +41,10 @@ public class ProductCategoryQuery : IProductCategoryQuery
         var inventory = _inventoryContext.Inventory.Select(x =>
             new {x.ProductId, x.UnitPrice}).ToList();
 
+        var discounts = _discountContext.CustomerDiscounts
+            .Where(x => x.StartDate < DateTime.Now && x.EndDate > DateTime.Now)
+            .Select(x => new {x.DiscountRate, x.ProductId}).ToList();
+
         var categories = _shopContext.ProductCategories
             .Include(x => x.Products)
             .ThenInclude(x => x.Category)
@@ -51,8 +59,24 @@ public class ProductCategoryQuery : IProductCategoryQuery
         {
             foreach (var product in category.Products)
             {
-                product.Price = inventory.FirstOrDefault(x => x.ProductId == product.Id)?
-                    .UnitPrice.ToMoney()!;
+                var productInventory = inventory.FirstOrDefault(x => x.ProductId == product.Id);
+
+                if (productInventory is not null)
+                {
+                    var price = productInventory.UnitPrice;
+                    product.Price = price.ToMoney()!;
+
+                    var discount = discounts.FirstOrDefault(x => x.ProductId == product.Id);
+
+                    if (discount is not null)
+                    {
+                        var discountRate = discount.DiscountRate;
+                        product.DiscountRate = discountRate;
+                        product.HasDiscount = discountRate > 0;
+                        var discountAmount = Math.Round((price * discountRate) / 100);
+                        product.PriceWithDiscount = (price - discountAmount).ToMoney();
+                    }
+                }
             }
         }
 
