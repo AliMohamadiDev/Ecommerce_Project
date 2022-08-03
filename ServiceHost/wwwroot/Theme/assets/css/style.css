@@ -2468,6 +2468,7 @@ select {
 .single-grid-product .product-countdown {
 	width: 350px;
 	max-width: 100%;
+    direction: ltr;
 }
 
 .single-grid-product .product-countdown .single-countdown {
