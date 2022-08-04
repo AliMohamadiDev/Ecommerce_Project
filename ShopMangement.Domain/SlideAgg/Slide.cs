@@ -29,7 +29,8 @@ public class Slide : EntityBase
 
     public void Edit(string picture, string pictureAlt, string pictureTitle, string heading, string title, string text, string link, string btnText)
     {
-        Picture = picture;
+        if (!string.IsNullOrWhiteSpace(picture))
+            Picture = picture;
         PictureAlt = pictureAlt;
         PictureTitle = pictureTitle;
         Heading = heading;
