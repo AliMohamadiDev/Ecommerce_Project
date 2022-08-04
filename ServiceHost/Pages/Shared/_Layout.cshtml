@@ -24,8 +24,8 @@
         <i class="ion-ios-close-empty"></i>
     </a>
     <div class="search-form">
-        <form action="#">
-            <input type="search" placeholder="هرچه در فروشگاه میخواهید جستجو کنید ...">
+        <form method="get" asp-page="/Search">
+            <input type="search" name="value" id="value" placeholder="هرچه در فروشگاه میخواهید جستجو کنید ...">
             <button type="submit">
                 <i class="ion-android-search"></i>
             </button>

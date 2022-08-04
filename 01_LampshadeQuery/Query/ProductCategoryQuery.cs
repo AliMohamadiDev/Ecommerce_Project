@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using _0_Framework.Application;
+﻿using _0_Framework.Application;
 using _01_LampshadeQuery.Contracts.Product;
 using _01_LampshadeQuery.Contracts.ProductCategory;
 using DiscountManagement.Infrastructure.EFCore;
@@ -45,7 +44,7 @@ public class ProductCategoryQuery : IProductCategoryQuery
                 Description = x.Description,
                 Slug = x.Slug,
                 Products = MapProducts(x.Products)
-            }).FirstOrDefault(x => x.Slug == slug);
+            }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
         
             foreach (var product in category.Products)
             {
@@ -84,7 +83,7 @@ public class ProductCategoryQuery : IProductCategoryQuery
             PictureAlt = x.PictureAlt,
             PictureTitle = x.PictureTitle,
             Slug = x.Slug
-        }).ToList();
+        }).AsNoTracking().ToList();
     }
 
     public List<ProductCategoryQueryModel> GetProductCategoriesWithProducts()
@@ -104,7 +103,7 @@ public class ProductCategoryQuery : IProductCategoryQuery
                 Id = x.Id,
                 Name = x.Name,
                 Products = MapProducts(x.Products)
-            }).ToList();
+            }).AsNoTracking().ToList();
 
         foreach (var category in categories)
         {
