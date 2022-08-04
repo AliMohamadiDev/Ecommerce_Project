@@ -39,11 +39,16 @@ public class ProductCategoryRepository : RepositoryBase<long, ProductCategory>, 
             Name = x.Name,
             Keywords = x.Keywords,
             MetaDescription = x.MetaDescription,
-            Picture = x.Picture,
+            //Picture = x.Picture,
             PictureAlt = x.PictureAlt,
             PictureTitle = x.PictureTitle,
             Slug = x.Slug
         }).FirstOrDefault(x => x.Id == id)!;
+    }
+
+    public string GetCategorySlugById(long id)
+    {
+        return _context.ProductCategories.Select(x => new {x.Id, x.Slug}).FirstOrDefault(x => x.Id == id)!.Slug;
     }
 
     public List<ProductCategoryViewModel> Search(ProductCategorySearchModel searchModel)
