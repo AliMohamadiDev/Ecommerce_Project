@@ -16,4 +16,11 @@ public class ProductQueryModel
     public bool HasDiscount { get; set; }
     public string DiscountExpireDate { get; set; }
     public string ShortDescription { get; set; }
+    public string Code { get; set; }
+    public string Description { get; set; }
+    public long CategoryId { get; set; }
+    public string Keywords { get; set; }
+    public string MetaDescription { get; set; }
+    public bool IsInStock { get; set; }
+    public List<ProductPictureQueryModel> Pictures { get; set; }
 }
