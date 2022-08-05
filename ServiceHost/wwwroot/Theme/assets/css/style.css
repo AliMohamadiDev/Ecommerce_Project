@@ -4120,6 +4120,7 @@ select {
 	display: -webkit-flex;
 	display: -ms-flexbox;
 	display: flex;
+    direction: rtl;
 }
 
 .product-actions--slider-box {
