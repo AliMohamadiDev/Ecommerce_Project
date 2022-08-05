@@ -60,7 +60,7 @@ public class ProductApplication : IProductApplication
         var picturePath = _fileUploader.Upload(command.Picture, path);
 
         product.Edit(command.Name, command.Code, command.ShortDescription,
-            command.MetaDescription, picturePath, command.PictureAlt, command.PictureTitle, command.CategoryId,
+            command.Description, picturePath, command.PictureAlt, command.PictureTitle, command.CategoryId,
             slug, command.Keywords, command.MetaDescription);
 
         _productRepository.SaveChanges();

@@ -81,13 +81,13 @@
                                         {
                                             <span class="text-danger">کنسل شده</span>
                                         }
-                                        else if (!item.IsCanceled && !item.IsConfirmed)
+                                        @if (!item.IsCanceled && !item.IsConfirmed)
                                         {
-                                            <span class="text-danger">در انتظار</span>
+                                            <span class="text-primary">در انتظار</span>
                                         }
-                                        else if (!item.IsCanceled && item.IsConfirmed)
+                                        @if (!item.IsCanceled && item.IsConfirmed)
                                         {
-                                            <span class="text-danger">تایید شده</span>
+                                            <span class="text-success">تایید شده</span>
                                         }
                                     </td>
                                     <td>
@@ -101,7 +101,7 @@
 
                                         @if (!item.IsConfirmed)
                                         {
-                                            <a asp-page="./Index" asp-page-handler="Remove" asp-route-id="@item.Id"
+                                            <a asp-page="./Index" asp-page-handler="Confirm" asp-route-id="@item.Id"
                                                class="btn btn-success">
                                                 تایید
                                             </a>

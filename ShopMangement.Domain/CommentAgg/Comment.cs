@@ -23,11 +23,13 @@ public class Comment : EntityBase
 
     public void Confirm()
     {
+        IsCanceled = false;
         IsConfirmed = true;
     }
 
     public void Cancel()
     {
+        IsConfirmed = false;
         IsCanceled = true;
     }
 }
