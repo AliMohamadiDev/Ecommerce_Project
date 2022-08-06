@@ -1,4 +1,5 @@
-﻿using _0_Framework.Infrastructure;
+﻿using _0_Framework.Application;
+using _0_Framework.Infrastructure;
 using BlogManagement.Application.Contracts.ArticleCategory;
 using BlogManagement.Domain.ArticleCategoryAgg;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,9 @@ public class ArticleCategoryRepository : RepositoryBase<long, ArticleCategory>, 
             Keywords = x.Keywords,
             MetaDescription = x.MetaDescription,
             ShowOrder = x.ShowOrder,
-            Slug = x.Slug
+            Slug = x.Slug,
+            PictureAlt = x.PictureAlt,
+            PictureTitle = x.PictureTitle
         }).AsNoTracking().FirstOrDefault(x => x.Id == id)!;
     }
 
@@ -37,6 +40,7 @@ public class ArticleCategoryRepository : RepositoryBase<long, ArticleCategory>, 
             Name = x.Name,
             Picture = x.Picture,
             ShowOrder = x.ShowOrder,
+            CreationDate = x.CreationDate.ToFarsi()
         });
 
         if (!string.IsNullOrWhiteSpace(searchModel.Name))
