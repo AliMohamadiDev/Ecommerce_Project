@@ -14,6 +14,11 @@ public class ArticleCategoryRepository : RepositoryBase<long, ArticleCategory>, 
         _blogContext = context;
     }
 
+    public string GetSlugBy(long id)
+    {
+        return _blogContext.ArticleCategories.Select(x => new {x.Id, x.Slug}).FirstOrDefault(x => x.Id == id)!.Slug;
+    }
+
     public EditArticleCategory GetDetails(long id)
     {
         return _blogContext.ArticleCategories.Select(x => new EditArticleCategory

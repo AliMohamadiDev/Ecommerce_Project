@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="ArticleCategoryAgg\" />
+    <Folder Include="ArticleAgg\" />
   </ItemGroup>
 
   <ItemGroup>
