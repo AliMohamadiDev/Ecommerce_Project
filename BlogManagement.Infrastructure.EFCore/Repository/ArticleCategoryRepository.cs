@@ -25,7 +25,7 @@ public class ArticleCategoryRepository : RepositoryBase<long, ArticleCategory>, 
         {
             Id = x.Id,
             Name = x.Name,
-            CanonicalAddress = x.CanonicalAddress,
+            CanonicalAddress = x.CanonicalAddress!,
             Description = x.Description,
             Keywords = x.Keywords,
             MetaDescription = x.MetaDescription,
@@ -34,6 +34,15 @@ public class ArticleCategoryRepository : RepositoryBase<long, ArticleCategory>, 
             PictureAlt = x.PictureAlt,
             PictureTitle = x.PictureTitle
         }).AsNoTracking().FirstOrDefault(x => x.Id == id)!;
+    }
+
+    public List<ArticleCategoryViewModel> GetArticleCategories()
+    {
+        return _blogContext.ArticleCategories.Select(x => new ArticleCategoryViewModel
+        {
+            Id = x.Id,
+            Name = x.Name
+        }).ToList();
     }
 
     public List<ArticleCategoryViewModel> Search(ArticleCategorySearchModel searchModel)
