@@ -21,6 +21,24 @@ public class ArticleQuery : IArticleQuery
             .Where(x => x.PublishDate <= DateTime.Now)
             .Select(x => new ArticleQueryModel
             {
+                Title = x.Title,
+                Slug = x.Slug,
+                Picture = x.Picture,
+                PictureAlt = x.PictureAlt,
+                PictureTitle = x.PictureTitle,
+                PublishDate = x.PublishDate.ToFarsi(),
+                ShortDescription = x.ShortDescription
+            }).ToList();
+    }
+
+    public ArticleQueryModel GetArticleDetails(string slug)
+    {
+        var article = _blogContext.Articles
+            .Include(x => x.Category)
+            .Where(x => x.PublishDate <= DateTime.Now)
+            .Select(x => new ArticleQueryModel
+            {
+                Title = x.Title,
                 CategoryId = x.CategoryId,
                 CategorySlug = x.Category.Slug,
                 CategoryName = x.Category.Name,
@@ -33,8 +51,11 @@ public class ArticleQuery : IArticleQuery
                 PictureAlt = x.PictureAlt,
                 PictureTitle = x.PictureTitle,
                 PublishDate = x.PublishDate.ToFarsi(),
-                ShortDescription = x.ShortDescription,
-                Title = x.Title
-            }).ToList();
+                ShortDescription = x.ShortDescription
+            }).FirstOrDefault(x => x.Slug == slug)!;
+
+        article.keywordList = article.Keywords.Split(",").ToList();
+        
+        return article;
     }
 }
