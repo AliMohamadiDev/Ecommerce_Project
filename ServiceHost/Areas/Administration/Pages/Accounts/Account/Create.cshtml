@@ -50,13 +50,9 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="RoleId" class="control-label">نقش ها</label>
-                    @*<select type="text" class="form-control" asp-for="RoleId"
+                    <select type="text" class="form-control" asp-for="RoleId"
                             asp-items='new SelectList(Model.Roles, "Id", "Name")'>
                         <option value="0">نقش...</option>
-                    </select>*@
-                    <select asp-for="RoleId" class="form-control">
-                        <option value="1">مدیر سیستم</option>
-                        <option value="2">کاربر سیستم</option>
                     </select>
                     <span asp-validation-for="RoleId" class="error"></span>
                 </div>
@@ -72,7 +68,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">بستن</button>
+        <button type="button" class="btn btn-default waves-effect waves-light" data-dismiss="modal">بستن</button>
         <button type="submit" class="btn btn-info waves-effect waves-light">ایجاد</button>
     </div>
 </form>
