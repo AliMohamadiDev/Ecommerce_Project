@@ -39,7 +39,7 @@
                         @foreach (var category in Model.ArticleCategories)
                         {
                             <li>
-                                <a asp-page="./ProductCategory" asp-route-id="@category.Slug">@category.Name</a>
+                                <a asp-page="./ArticleCategory" asp-route-id="@category.Slug">@category.Name</a>
                             </li>
                         }
                     </ul>
@@ -247,26 +247,24 @@
                     <li class="menu-item-has-children">
                         <a href="#">محصولات</a>
                         <ul class="sub-menu">
-                            <li>
-                                <a href="blog-left-sidebar.html">گروه محصول 1</a>
-                            </li>
-                            <li>
-                                <a href="blog-right-sidebar.html">گروه محصول 2</a>
-                            </li>
-                            <li>
+                            @foreach (var category in Model.ProductCategories)
+                            {
+                                <li>
+                                    <a asp-page="./ProductCategory" asp-route-id="@category.Slug">@category.Name</a>
+                                </li>
+                            }
                         </ul>
                     </li>
 
                     <li class="menu-item-has-children">
                         <a href="#">مقالات</a>
                         <ul class="sub-menu">
-                            <li>
-                                <a href="blog-left-sidebar.html">مقاله 1</a>
-                            </li>
-                            <li>
-                                <a href="blog-right-sidebar.html">مقاله 2</a>
-                            </li>
-                            <li>
+                            @foreach (var category in Model.ArticleCategories)
+                            {
+                                <li>
+                                    <a asp-page="./ArticleCategory" asp-route-id="@category.Slug">@category.Name</a>
+                                </li>
+                            }
                         </ul>
                     </li>
 
