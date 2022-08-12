@@ -6,12 +6,14 @@ namespace AccountManagement.Application
 {
     public class AccountApplication : IAccountApplication
     {
+        private readonly IAuthHelper _authHelper;
         private readonly IFileUploader _fileUploader;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IAccountRepository _accountRepository;
 
-        public AccountApplication(IAccountRepository accountRepository, IFileUploader fileUploader, IPasswordHasher passwordHasher)
+        public AccountApplication(IAccountRepository accountRepository, IFileUploader fileUploader, IPasswordHasher passwordHasher, IAuthHelper authHelper)
         {
+            _authHelper = authHelper;
             _fileUploader = fileUploader;
             _passwordHasher = passwordHasher;
             _accountRepository = accountRepository;
@@ -68,6 +70,25 @@ namespace AccountManagement.Application
             return operation.Succeeded();
         }
 
+        public OperationResult Login(Login command)
+        {
+            var operation = new OperationResult();
+            var account = _accountRepository.GetBy(command.Username);
+
+            if (account is null)
+                return operation.Failed(ApplicationMessages.WrongUserPass);
+
+            (bool Verified, bool NeedsUpgrade) result = _passwordHasher.Check(account.Password, command.Password);
+
+            if (!result.Verified)
+                return operation.Failed(ApplicationMessages.WrongUserPass);
+
+            var authViewModel = new AuthViewModel(account.Id, account.RoleId, account.Fullname, account.Username);
+            _authHelper.Signin(authViewModel);
+
+            return operation.Succeeded();
+        }
+
         public EditAccount GetDetails(long id)
         {
             return _accountRepository.GetDetails(id);
@@ -76,6 +97,11 @@ namespace AccountManagement.Application
         public List<AccountViewModel> Search(AccountSearchModel searchModel)
         {
             return _accountRepository.Search(searchModel);
+        }
+
+        public void Logout()
+        {
+            _authHelper.SignOut();
         }
     }
 }

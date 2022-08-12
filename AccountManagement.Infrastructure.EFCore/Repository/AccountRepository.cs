@@ -65,4 +65,9 @@ public class AccountRepository : RepositoryBase<long, Account>, IAccountReposito
 
         return query.OrderByDescending(x => x.Id).ToList();
     }
+
+    public Account GetBy(string username)
+    {
+        return _context.Accounts.FirstOrDefault(x => x.Username == username)!;
+    }
 }
