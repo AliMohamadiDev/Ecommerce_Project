@@ -19,7 +19,7 @@ namespace AccountManagement.Application
             _accountRepository = accountRepository;
         }
 
-        public OperationResult Create(CreateAccount command)
+        public OperationResult Register(RegisterAccount command)
         {
             var operation = new OperationResult();
 

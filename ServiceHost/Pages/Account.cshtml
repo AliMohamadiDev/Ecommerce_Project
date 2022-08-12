@@ -31,9 +31,9 @@
                     <div class="page-content-wrapper">
                         <div class="row">
                             <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
-                                @if (Model.Message is not null)
+                                @if (Model.LoginMessage is not null)
                                 {
-                                    <div class="alert alert-danger">@Model.Message</div>
+                                    <div class="alert alert-danger">@Model.LoginMessage</div>
                                 }
                                 <form method="post" asp-page-handler="Login">
                                     <div class="login-form">
@@ -69,8 +69,11 @@
                                 </form>
                             </div>
                             <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
-                                <form action="#">
-
+                                @if (Model.RegisterMessage is not null)
+                                {
+                                    <div class="alert alert-danger">@Model.RegisterMessage</div>
+                                }
+                                <form method="post" asp-page-handler="Register">
                                     <div class="login-form">
                                         <h4 class="login-title">ثبت نام</h4>
 
@@ -100,7 +103,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
