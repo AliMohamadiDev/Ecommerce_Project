@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using _0_Framework.Application;
+using _0_Framework.Infrastructure;
 using AccountManagement.Infrastructure.Configuration;
 using BlogManagement.Infrastructure.Configuration;
 using CommentManagement.Infrastructure.Configuration;
@@ -41,7 +42,24 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         o.AccessDeniedPath = new PathString("/AccessDenied");
     });
 
-builder.Services.AddRazorPages();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminArea", b => b.RequireRole(new List<string> {Roles.Administration, Roles.BlogAdmin}));
+    options.AddPolicy("Shop", b => b.RequireRole(new List<string> {Roles.Administration}));
+    options.AddPolicy("Discount", b => b.RequireRole(new List<string> {Roles.Administration}));
+    options.AddPolicy("Account", b => b.RequireRole(new List<string> {Roles.Administration}));
+    options.AddPolicy("Inventory", b => b.RequireRole(new List<string> {Roles.Administration}));
+});
+
+builder.Services.AddRazorPages()
+    .AddRazorPagesOptions(options =>
+{
+    options.Conventions.AuthorizeAreaFolder("Administration", "/", "AdminArea");
+    options.Conventions.AuthorizeAreaFolder("Administration", "/Shop", "Shop");
+    options.Conventions.AuthorizeAreaFolder("Administration", "/Discounts", "Discount");
+    options.Conventions.AuthorizeAreaFolder("Administration", "/Accounts", "Account");
+    options.Conventions.AuthorizeAreaFolder("Administration", "/Inventory", "Inventory");
+});
 
 var app = builder.Build();
 

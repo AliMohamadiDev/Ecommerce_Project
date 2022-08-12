@@ -4,5 +4,7 @@ public interface IAuthHelper
 {
     void SignOut();
     bool IsAuthenticated();
+    string CurrentAccountRole();
     void Signin(AuthViewModel account);
+    AuthViewModel CurrentAccountInfo();
 }
