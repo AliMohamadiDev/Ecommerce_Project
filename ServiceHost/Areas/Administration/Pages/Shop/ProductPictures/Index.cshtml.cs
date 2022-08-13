@@ -1,8 +1,10 @@
+using _0_Framework.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ShopManagement.Application.Contracts.Product;
 using ShopManagement.Application.Contracts.ProductPicture;
+using ShopManagement.Configuration.Permissions;
 
 namespace ServiceHost.Areas.Administration.Pages.Shop.ProductPictures;
 
@@ -23,6 +25,7 @@ public class IndexModel : PageModel
         _productPictureApplication = productPictureApplication;
     }
 
+    [NeedPermission(ShopPermissions.ListProductCategories)]
     public void OnGet(ProductPictureSearchModel searchModel)
     {
         Products = new SelectList(_productApplication.GetProducts(), "Id", "Name");
@@ -38,6 +41,7 @@ public class IndexModel : PageModel
         return Partial("./Create", command);
     }
 
+    [NeedPermission(ShopPermissions.CreateProductCategory)]
     public JsonResult OnPostCreate(CreateProductPicture command)
     {
         var result = _productPictureApplication.Create(command);
@@ -51,6 +55,7 @@ public class IndexModel : PageModel
         return Partial("Edit", productPicture);
     }
 
+    [NeedPermission(ShopPermissions.EditProductCategory)]
     public JsonResult OnPostEdit(EditProductPicture command)
     {
         var result = _productPictureApplication.Edit(command);

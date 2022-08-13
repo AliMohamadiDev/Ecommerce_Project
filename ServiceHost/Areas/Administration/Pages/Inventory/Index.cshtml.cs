@@ -1,5 +1,6 @@
 using _0_Framework.Infrastructure;
 using InventoryManagement.Application.Contracts.Inventory;
+using InventoryManagement.Infrastructure.Configuration.Permissions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -26,6 +27,7 @@ public class IndexModel : PageModel
         _inventoryApplication = inventoryApplication;
     }
 
+    [NeedPermission(InventoryPermissions.ListInventory)]
     public void OnGet(InventorySearchModel searchModel)
     {
         Products = new SelectList(_productApplication.GetProducts(), "Id", "Name");
@@ -41,6 +43,7 @@ public class IndexModel : PageModel
         return Partial("./Create", command);
     }
 
+    [NeedPermission(InventoryPermissions.CreateInventory)]
     public JsonResult OnPostCreate(CreateInventory command)
     {
         var result = _inventoryApplication.Create(command);
@@ -54,6 +57,7 @@ public class IndexModel : PageModel
         return Partial("Edit", inventory);
     }
 
+    [NeedPermission(InventoryPermissions.EditInventory)]
     public JsonResult OnPostEdit(EditInventory command)
     {
         var result = _inventoryApplication.Edit(command);
@@ -69,6 +73,7 @@ public class IndexModel : PageModel
         return Partial("Increase", command);
     }
 
+    [NeedPermission(InventoryPermissions.Increase)]
     public JsonResult OnPostIncrease(IncreaseInventory command)
     {
         var result = _inventoryApplication.Increase(command);
@@ -84,12 +89,14 @@ public class IndexModel : PageModel
         return Partial("Reduce", command);
     }
 
+    [NeedPermission(InventoryPermissions.Reduce)]
     public JsonResult OnPostReduce(ReduceInventory command)
     {
         var result = _inventoryApplication.Reduce(command);
         return new JsonResult(result);
     }
 
+    [NeedPermission(InventoryPermissions.OperationLog)]
     public IActionResult OnGetLog(long id)
     {
         var log = _inventoryApplication.GetOperationLog(id);

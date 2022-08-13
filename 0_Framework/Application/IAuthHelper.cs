@@ -7,4 +7,5 @@ public interface IAuthHelper
     string CurrentAccountRole();
     void Signin(AuthViewModel account);
     AuthViewModel CurrentAccountInfo();
+    List<int> GetPermissions();
 }
