@@ -13,7 +13,6 @@
     <Folder Include="Contracts\Product\" />
     <Folder Include="Contracts\ProductCategory\" />
     <Folder Include="Contracts\Slide\" />
-    <Folder Include="Query\" />
   </ItemGroup>
 
   <ItemGroup>

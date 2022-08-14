@@ -23,6 +23,14 @@
                                         <span asp-validation-for="Command.Name" class="error"></span>
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <label class="control-label col-md-3">انتخاب دسترسی ها</label>
+                                    <div class="col-md-12">
+                                        <select asp-for="Command.Permissions" asp-items="Model.Permissions" class="multi-select" multiple="multiple" id="my_multi_select3">
+                                            <option value="0">بدون دسترسی</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                                 <a class="btn btn-default waves-effect waves-light m-b-5" asp-page="./Index">بازگشت</a>
                                 <button type="submit" class="btn btn-info waves-effect waves-light m-b-5">ایجاد</button>

@@ -5,6 +5,7 @@ using CommentManagement.Infrastructure.EFCore;
 using DiscountManagement.Infrastructure.EFCore;
 using InventoryManagement.Infrastructure.EFCore;
 using Microsoft.EntityFrameworkCore;
+using ShopManagement.Application.Contracts.Order;
 using ShopManagement.Domain.ProductPictureAgg;
 using ShopManagement.Infrastructure.EFCore;
 
@@ -37,22 +38,22 @@ public class ProductQuery : IProductQuery
         var product = _shopContext.Products
             .Include(x => x.Category)
             .Include(x=>x.ProductPictures)
-            .Select(product => new ProductQueryModel
+            .Select(x => new ProductQueryModel
             {
-                Id = product.Id,
-                Category = product.Category.Name,
-                Name = product.Name,
-                Picture = product.Picture,
-                PictureAlt = product.PictureAlt,
-                PictureTitle = product.PictureTitle,
-                Slug = product.Slug,
-                CategorySlug = product.Category.Slug,
-                Code = product.Code,
-                Description = product.Description,
-                ShortDescription = product.ShortDescription,
-                Keywords = product.Keywords,
-                MetaDescription = product.MetaDescription,
-                Pictures = MapProductPictures(product.ProductPictures)
+                Id = x.Id,
+                Category = x.Category.Name,
+                Name = x.Name,
+                Picture = x.Picture,
+                PictureAlt = x.PictureAlt,
+                PictureTitle = x.PictureTitle,
+                Slug = x.Slug,
+                CategorySlug = x.Category.Slug,
+                Code = x.Code,
+                Description = x.Description,
+                ShortDescription = x.ShortDescription,
+                Keywords = x.Keywords,
+                MetaDescription = x.MetaDescription,
+                Pictures = MapProductPictures(x.ProductPictures)
             }).AsNoTracking().FirstOrDefault(x => x.Slug == slug);
 
         if (product is null)
@@ -65,6 +66,7 @@ public class ProductQuery : IProductQuery
             product.IsInStock = productInventory.InStock;
             var price = productInventory.UnitPrice;
             product.Price = price.ToMoney()!;
+            product.DoublePrice = price;
 
             var discount = discounts.FirstOrDefault(x => x.ProductId == product.Id);
 
@@ -210,5 +212,19 @@ public class ProductQuery : IProductQuery
 
 
         return products;
+    }
+
+    public List<CartItem> CheckInventoryStatus(List<CartItem> cartItems)
+    {
+        var inventory = _inventoryContext.Inventory.ToList();
+
+        foreach (var cartItem in cartItems.Where(cartItem =>
+                     inventory.Any(x=>x.ProductId == cartItem.Id && x.InStock)))
+        {
+            var itemInventory = inventory.Find(x => x.ProductId == cartItem.Id);
+            cartItem.IsInStock = itemInventory.CalculateCurrentCount() >= cartItem.Count;
+        }
+
+        return cartItems;
     }
 }
