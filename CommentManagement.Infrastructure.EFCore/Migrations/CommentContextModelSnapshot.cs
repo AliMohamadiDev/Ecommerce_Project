@@ -17,7 +17,7 @@ namespace CommentManagement.Infrastructure.EFCore.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -64,7 +64,6 @@ namespace CommentManagement.Infrastructure.EFCore.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Website")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 

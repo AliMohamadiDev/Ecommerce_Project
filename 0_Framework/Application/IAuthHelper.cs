@@ -8,4 +8,5 @@ public interface IAuthHelper
     void Signin(AuthViewModel account);
     AuthViewModel CurrentAccountInfo();
     List<int> GetPermissions();
+    long CurrentAccountId();
 }

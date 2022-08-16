@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CommentManagement.Infrastructure.EFCore.Migrations
 {
-    public partial class NewCommentAdded : Migration
+    public partial class CommentFix : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace CommentManagement.Infrastructure.EFCore.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Website = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Website = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Message = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     IsCanceled = table.Column<bool>(type: "bit", nullable: false),

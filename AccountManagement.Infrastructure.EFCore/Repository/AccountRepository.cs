@@ -27,6 +27,15 @@ public class AccountRepository : RepositoryBase<long, Account>, IAccountReposito
         }).FirstOrDefault(x => x.Id == id)!;
     }
 
+    public List<AccountViewModel> GetAccounts()
+    {
+        return _context.Accounts.Select(x => new AccountViewModel
+        {
+            Id = x.Id,
+            Fullname = x.Fullname
+        }).ToList();
+    }
+
     public List<AccountViewModel> Search(AccountSearchModel searchModel)
     {
         var query = _context.Accounts

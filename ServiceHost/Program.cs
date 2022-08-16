@@ -1,6 +1,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using _0_Framework.Application;
+using _0_Framework.Application.ZarinPal;
 using _0_Framework.Infrastructure;
 using AccountManagement.Infrastructure.Configuration;
 using BlogManagement.Infrastructure.Configuration;
@@ -24,14 +25,15 @@ CommentManagementBootstrapper.Configure(builder.Services, connectionString);
 AccountManagementBootstrapper.Configure(builder.Services, connectionString);
 
 builder.Services.AddTransient<IFileUploader, FileUploader>();
-builder.Services.AddTransient<IAuthHelper, AuthHelper>();   
+builder.Services.AddTransient<IAuthHelper, AuthHelper>();
+builder.Services.AddTransient<IZarinPalFactory, ZarinPalFactory>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
 
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
     options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.Strict;
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
 });
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

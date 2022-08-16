@@ -12,14 +12,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CommentManagement.Infrastructure.EFCore.Migrations
 {
     [DbContext(typeof(CommentContext))]
-    [Migration("20220810171930_NewCommentAdded")]
-    partial class NewCommentAdded
+    [Migration("20220815063457_CommentFix2")]
+    partial class CommentFix2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.7")
+                .HasAnnotation("ProductVersion", "6.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -66,7 +66,6 @@ namespace CommentManagement.Infrastructure.EFCore.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Website")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 

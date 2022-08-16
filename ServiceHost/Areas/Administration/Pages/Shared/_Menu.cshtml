@@ -58,6 +58,12 @@
                     </a>
                 </li>
                 
+                <li>
+                    <a asp-page="/Shop/Orders/Index" class="waves-effect">
+                        <i class="md md-credit-card"></i><span> سفارشات </span>
+                    </a>
+                </li>
+                
                 @if (AuthHelper.CurrentAccountRole() == "1")
                 {
                     <li class="has_sub">

@@ -23,6 +23,13 @@ namespace ServiceHost.Pages
         {
             var serializer = new JavaScriptSerializer();
             var value = Request.Cookies[CookieName];
+
+            if (value is null)
+            {
+                RedirectToPage("/Index");
+                return;
+            }
+
             var cartItems = serializer.Deserialize<List<CartItem>>(value);
             foreach (var item in cartItems)
                 item.CalculateTotalItemPrice();
