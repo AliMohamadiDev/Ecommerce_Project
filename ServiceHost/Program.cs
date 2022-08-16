@@ -8,21 +8,23 @@ using BlogManagement.Infrastructure.Configuration;
 using CommentManagement.Infrastructure.Configuration;
 using DiscountManagement.Configuration;
 using InventoryManagement.Infrastructure.Configuration;
+using InventoryManagement.Presentation.Api.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using ServiceHost;
 using ShopManagement.Configuration;
+using ShopManagement.Presentation.Api.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHttpContextAccessor();
 var connectionString = builder.Configuration.GetConnectionString("LampshadeDB");
-ShopManagementBootstrapper.Configure(builder.Services, connectionString);
-DiscountManagementBootstrapper.Configure(builder.Services, connectionString);
-InventoryManagementBootstrapper.Configure(builder.Services, connectionString);
 BlogManagementBootstrapper.Configure(builder.Services, connectionString);
+ShopManagementBootstrapper.Configure(builder.Services, connectionString);
 CommentManagementBootstrapper.Configure(builder.Services, connectionString);
 AccountManagementBootstrapper.Configure(builder.Services, connectionString);
+DiscountManagementBootstrapper.Configure(builder.Services, connectionString);
+InventoryManagementBootstrapper.Configure(builder.Services, connectionString);
 
 builder.Services.AddTransient<IFileUploader, FileUploader>();
 builder.Services.AddTransient<IAuthHelper, AuthHelper>();
@@ -56,13 +58,16 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages()
     .AddMvcOptions(options => options.Filters.Add<SecurityPageFilter>())
     .AddRazorPagesOptions(options =>
-{
-    options.Conventions.AuthorizeAreaFolder("Administration", "/", "AdminArea");
-    options.Conventions.AuthorizeAreaFolder("Administration", "/Shop", "Shop");
-    options.Conventions.AuthorizeAreaFolder("Administration", "/Discounts", "Discount");
-    options.Conventions.AuthorizeAreaFolder("Administration", "/Accounts", "Account");
-    options.Conventions.AuthorizeAreaFolder("Administration", "/Inventory", "Inventory");
-});
+    {
+        options.Conventions.AuthorizeAreaFolder("Administration", "/", "AdminArea");
+        options.Conventions.AuthorizeAreaFolder("Administration", "/Shop", "Shop");
+        options.Conventions.AuthorizeAreaFolder("Administration", "/Discounts", "Discount");
+        options.Conventions.AuthorizeAreaFolder("Administration", "/Accounts", "Account");
+        options.Conventions.AuthorizeAreaFolder("Administration", "/Inventory", "Inventory");
+    })
+    .AddApplicationPart(typeof(ProductController).Assembly)
+    .AddApplicationPart(typeof(InventoryController).Assembly)
+    .AddNewtonsoftJson();
 
 var app = builder.Build();
 
@@ -86,6 +91,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.MapDefaultControllerRoute();

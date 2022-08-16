@@ -30,14 +30,18 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-wrapper">
-                    @foreach (var item in Model.CartItems.Where(x => !x.IsInStock))
-                    {
-                        <div class="alert alert-warning">
-                            <i class="fa fa-warning">
-                                موجودی کالای <strong>@item.Name</strong> در انبار کافی نمی باشد.
-                            </i>
-                        </div>
-                    }
+
+                    <div id="productStockWarnings">
+                        @foreach (var item in Model.CartItems.Where(x => !x.IsInStock))
+                        {
+                            <div class="alert alert-warning" id="@item.Id">
+                                <i class="fa fa-warning"></i> کالای
+                                <strong>@item.Name</strong>
+                                در انبار کمتر از تعداد درخواستی موجود است.
+                            </div>
+                        }
+                    </div>
+
                     <div class="page-content-wrapper">
                         <div class="cart-table table-responsive">
                             <table class="table">
@@ -45,9 +49,9 @@
                                 <tr>
                                     <th class="pro-thumbnail">عکس</th>
                                     <th class="pro-title">محصول</th>
-                                    <th class="pro-price">قیمت</th>
+                                    <th class="pro-price">قیمت واحد</th>
                                     <th class="pro-quantity">تعداد</th>
-                                    <th class="pro-subtotal">مجموع</th>
+                                    <th class="pro-subtotal">قیمت کل</th>
                                     <th class="pro-remove">حذف</th>
                                 </tr>
                                 </thead>
@@ -56,23 +60,23 @@
                                 {
                                     <tr>
                                         <td class="pro-thumbnail">
-                                            <a href="single-product.html">
-                                                <img src="~/ProductPictures/@item.Picture" class="img-fluid" alt="@item.Name" title="@item.Name">
+                                            <a>
+                                                <img src="~/ProductPictures/@item.Picture" class="img-fluid" alt="@item.Name">
                                             </a>
                                         </td>
                                         <td class="pro-title">
-                                            <a href="single-product.html">@item.Name</a>
+                                            <a>@item.Name</a>
                                         </td>
                                         <td class="pro-price">
                                             <span>@item.UnitPrice.ToMoney()</span>
                                         </td>
                                         <td class="pro-quantity">
                                             <div class="quantity-selection">
-                                                <input type="number" value="@item.Count" min="1" onchange="changeCartItemCount('@item.Id', 'totalItemprice-@item.Id', this.value)">
+                                                <input type="number" value="@item.Count" min="1" onchange="changeCartItemCount('@item.Id', 'totalItemPrice-@item.Id', this.value)">
                                             </div>
                                         </td>
                                         <td class="pro-subtotal">
-                                            <span id="totalItemprice-@item.Id">@item.TotalItemPrice.ToMoney()</span>
+                                            <span id="totalItemPrice-@item.Id">@item.TotalItemPrice.ToMoney()</span>
                                         </td>
                                         <td class="pro-remove">
                                             <a asp-page-handler="RemoveFromCart" asp-route-id="@item.Id">
@@ -81,18 +85,14 @@
                                         </td>
                                     </tr>
                                 }
-
                                 </tbody>
                             </table>
                         </div>
-
                         <div class="row">
                             <div class="col-lg-6 col-12 d-flex">
                                 <div class="cart-summary">
                                     <div class="cart-summary-button">
-                                        <button class="checkout-btn" >
-                                            <a asp-page-handler="GoToCheckout">تکمیل فرایند خرید</a>
-                                        </button>
+                                        <a class="checkout-btn" asp-page-handler="GoToCheckOut">تکمیل فرایند خرید</a>
                                     </div>
                                 </div>
                             </div>

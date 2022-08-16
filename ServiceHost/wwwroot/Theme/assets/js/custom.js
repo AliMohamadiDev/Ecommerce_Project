@@ -67,7 +67,6 @@ function removeFromCart(id) {
     updateCart();
 }
 
- 
 function changeCartItemCount(id, totalId, count) {
     var products = $.cookie(cookieName);
     products = JSON.parse(products);
@@ -79,8 +78,7 @@ function changeCartItemCount(id, totalId, count) {
     //products[productIndex].totalPrice = newPrice;
     $.cookie(cookieName, JSON.stringify(products), { expires: 2, path: "/" });
     updateCart();
-}
-/*
+
     //const data = {
     //    'productId': parseInt(id),
     //    'count': parseInt(count)
@@ -147,5 +145,3 @@ function changeCartItemCount(id, totalId, count) {
         }
     });
 }
-
-*/

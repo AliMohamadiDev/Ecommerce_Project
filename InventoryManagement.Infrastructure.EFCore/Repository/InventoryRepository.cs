@@ -84,7 +84,7 @@ public class InventoryRepository : RepositoryBase<long, Inventory>, IInventoryRe
 
         foreach (var operation in operations)
         {
-            operation.Operator = account.FirstOrDefault(x => x.Id == operation.OperatorId)!.Fullname;
+            operation.Operator = account.FirstOrDefault(x => x.Id == operation.OperatorId)?.Fullname;
         }
 
         return operations;
