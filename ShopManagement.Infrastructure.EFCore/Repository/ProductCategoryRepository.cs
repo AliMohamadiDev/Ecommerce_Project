@@ -21,7 +21,8 @@ public class ProductCategoryRepository : RepositoryBase<long, ProductCategory>, 
         return _context.ProductCategories.Select(x => new ProductCategoryViewModel
         {
             Id = x.Id,
-            Name = x.Name
+            Name = x.Name,
+            ProductsCount = x.Products.Count
         }).ToList();
     }
 
@@ -63,7 +64,7 @@ public class ProductCategoryRepository : RepositoryBase<long, ProductCategory>, 
 
         if (!string.IsNullOrWhiteSpace(searchModel.Name))
         {
-            query = query.Where(x => x.Name.Contains(searchModel.Name)) as List<ProductCategoryViewModel>;
+            query = new List<ProductCategoryViewModel>(query.Where(x => x.Name.Contains(searchModel.Name)));
         }
 
         return query.OrderByDescending(x => x.Id).ToList();

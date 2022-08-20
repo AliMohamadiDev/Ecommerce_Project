@@ -1,4 +1,5 @@
-using _0_Framework.Infrastructure;
+﻿using _0_Framework.Infrastructure;
+using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -60,5 +61,37 @@ public class IndexModel : PageModel
     {
         var result = _productApplication.Edit(command);
         return new JsonResult(result);
+    }
+
+
+    public IActionResult OnGetExcel()
+    {
+        var products = _productApplication.Search(new ProductSearchModel());
+        using var workbook = new XLWorkbook();
+        var worksheet = workbook.Worksheets.Add("Products");
+        var currentRow = 1;
+
+        worksheet.Cell(currentRow, 1).Value = "آی دی";
+        worksheet.Cell(currentRow, 2).Value = "نام";
+        worksheet.Cell(currentRow, 3).Value = "گروه";
+        worksheet.Cell(currentRow, 4).Value = "کد";
+        worksheet.Cell(currentRow, 5).Value = "تاریخ ایجاد";
+
+        foreach (var product in products)
+        {
+            currentRow++;
+
+            worksheet.Cell(currentRow, 1).Value = product.Id;
+            worksheet.Cell(currentRow, 2).Value = product.Name;
+            worksheet.Cell(currentRow, 3).Value = product.Category;
+            worksheet.Cell(currentRow, 4).Value = product.Code;
+            worksheet.Cell(currentRow, 5).Value = product.CreationDate;
+        }
+
+        using var stream = new MemoryStream();
+        workbook.SaveAs(stream);
+        var content = stream.ToArray();
+
+        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "products.xlsx");
     }
 }

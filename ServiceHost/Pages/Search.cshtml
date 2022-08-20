@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page
 @model ServiceHost.Pages.SearchModel
 @{
     ViewData["Title"] = "نتیجه جستجو";
@@ -75,7 +75,7 @@
                                                                 <span class="sale">-@product.DiscountRate%</span>
                                                             }
                                                         </div>
-                                                        <a href="single-product.html">
+                                                        <a asp-page="./Product" asp-route-id="@product.Slug">
                                                             <img src="~/ProductPictures/@product.Picture" class="img-fluid"
                                                                  alt="@product.PictureAlt" title="@product.PictureTitle">
                                                         </a>
@@ -96,7 +96,7 @@
                                                         </div>
 
                                                         <h3 class="single-grid-product__title">
-                                                            <a asp-page="/ProductDetails">@product.Name</a>
+                                                            <a asp-page="./Product" asp-route-id="@product.Slug">@product.Name</a>
                                                         </h3>
                                                         <p class="single-grid-product__price">
                                                             @if (product.HasDiscount)
@@ -125,16 +125,6 @@
                                 <div class="pagination-area">
                                     <div class="pagination-area__left">
                                         Showing 1 to @(Model.Products.Count < 9 ? Model.Products.Count : 9) of @Model.Products.Count (@(Model.Products.Count / 9 + 1) Pages)
-                                    </div>
-                                    <div class="pagination-area__right">
-                                        <ul class="pagination-section">
-                                            <li>
-                                                <a class="active" href="#">1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">2</a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>
