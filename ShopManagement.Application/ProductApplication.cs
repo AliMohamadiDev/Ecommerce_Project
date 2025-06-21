@@ -1,7 +1,7 @@
 ﻿using _0_Framework.Application;
-using ShopManagement.Application.Contracts.Product;
 using ShopManagement.Domain.ProductAgg;
 using ShopManagement.Domain.ProductCategoryAgg;
+using ShopManagement.Application.Contracts.Product;
 
 namespace ShopManagement.Application;
 
@@ -13,8 +13,8 @@ public class ProductApplication : IProductApplication
 
     public ProductApplication(IProductRepository productRepository, IFileUploader fileUploader, IProductCategoryRepository productCategoryRepository)
     {
-        _productRepository = productRepository;
         _fileUploader = fileUploader;
+        _productRepository = productRepository;
         _productCategoryRepository = productCategoryRepository;
     }
 
@@ -44,7 +44,7 @@ public class ProductApplication : IProductApplication
     {
         var operation = new OperationResult();
         var product = _productRepository.GetProductWithCategory(command.Id);
-        if (product is null)
+        if (product == null)
         {
             return operation.Failed(ApplicationMessages.RecordNotFound);
         }

@@ -14,16 +14,16 @@ namespace _01_LampshadeQuery.Query;
 public class ProductQuery : IProductQuery
 {
     private readonly ShopContext _shopContext;
-    private readonly InventoryContext _inventoryContext;
-    private readonly DiscountContext _discountContext;
     private readonly CommentContext _commentContext;
+    private readonly DiscountContext _discountContext;
+    private readonly InventoryContext _inventoryContext;
 
     public ProductQuery(ShopContext shopContext, InventoryContext inventoryContext, DiscountContext discountContext, CommentContext commentContext)
     {
         _shopContext = shopContext;
-        _inventoryContext = inventoryContext;
-        _discountContext = discountContext;
         _commentContext = commentContext;
+        _discountContext = discountContext;
+        _inventoryContext = inventoryContext;
     }
 
     public ProductQueryModel GetProductDetails(string slug)
